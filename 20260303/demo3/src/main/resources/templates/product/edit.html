@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_layout :: layout(~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa sản phẩm</title>
+</head>
+<body>
+<main>
+    <div class="soft-card p-4 p-lg-5 mx-auto" style="max-width: 760px;">
+        <h3 class="mb-1">Sửa sản phẩm</h3>
+        <p class="text-secondary mb-4">Cập nhật thông tin, có thể giữ nguyên ảnh cũ hoặc chọn ảnh mới.</p>
+
+        <form th:action="@{/products/edit}" th:object="${product}" method="post" enctype="multipart/form-data" class="row g-3">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{image}">
+
+            <div class="col-12">
+                <label for="name" class="form-label">Tên sản phẩm</label>
+                <input class="form-control" type="text" th:field="*{name}" id="name">
+                <div class="text-danger small mt-1"
+                     th:if="${#fields.hasErrors('name')}"
+                     th:errors="*{name}"></div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="price" class="form-label">Giá (VND)</label>
+                <input class="form-control" type="number" th:field="*{price}" id="price">
+                <div class="text-danger small mt-1"
+                     th:if="${#fields.hasErrors('price')}"
+                     th:errors="*{price}"></div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="category" class="form-label">Danh mục</label>
+                <select name="category_id" class="form-select" id="category">
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}"
+                            th:selected="${product.category != null and product.category.id == category.id}"></option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label d-block">Ảnh hiện tại</label>
+                <img th:if="${product.image != null and !#strings.isEmpty(product.image)}"
+                     th:src="@{'/images/' + ${product.image}}"
+                     alt="Current Product Image"
+                     class="rounded-3 border"
+                     style="width: 180px; height: 130px; object-fit: cover;">
+                <p th:if="${product.image == null or #strings.isEmpty(product.image)}" class="text-secondary mb-0">Chưa có ảnh hiện tại.</p>
+            </div>
+
+            <div class="col-12">
+                <label for="image" class="form-label">Chọn ảnh mới (tuỳ chọn)</label>
+                <input class="form-control" type="file" id="image" name="imageProduct" accept="image/png,image/jpeg,image/webp">
+            </div>
+
+            <div class="col-12 d-flex gap-2 pt-2">
+                <button type="submit" class="btn btn-accent">Cập nhật</button>
+                <a th:href="@{/products}" class="btn btn-outline-secondary">Quay lại danh sách</a>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

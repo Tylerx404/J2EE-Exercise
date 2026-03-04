@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_layout :: layout(~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Không tìm thấy</title>
+</head>
+<body>
+<main>
+    <div class="soft-card p-5 text-center mx-auto" style="max-width: 680px;">
+        <h2 class="mb-3">404 - Không tìm thấy dữ liệu</h2>
+        <p class="text-secondary mb-4">Sản phẩm bạn đang truy cập không tồn tại hoặc đã bị xóa.</p>
+        <a th:href="@{/products}" class="btn btn-accent">Quay về danh sách sản phẩm</a>
+    </div>
+</main>
+</body>
+</html>
