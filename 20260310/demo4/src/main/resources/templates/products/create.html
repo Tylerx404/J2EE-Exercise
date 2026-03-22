@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Tao san pham')}"></head>
+  <body>
+    <div class="page">
+      <div th:replace="~{fragments :: nav('products')}"></div>
+      <main class="content">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Bieu mau</p>
+            <h1 th:text="${submitLabel} + ' san pham'"></h1>
+            <p class="subtitle">Hoan thien thong tin can thiet.</p>
+          </div>
+          <a class="button ghost" th:href="@{/products}">Quay lai danh sach</a>
+        </section>
+
+        <section class="card form-card">
+          <form th:action="@{${formAction}}" method="post" th:object="${product}">
+            <div class="field">
+              <label for="name">Ten san pham</label>
+              <input id="name" type="text" th:field="*{name}" placeholder="VD: But gel Sakura" />
+              <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+
+            <div class="field">
+              <label for="price">Gia (VND)</label>
+              <input id="price" type="number" min="1" step="1" th:field="*{price}" />
+              <p class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+            </div>
+
+            <div class="field">
+              <label for="categoryId">Danh muc</label>
+              <select id="categoryId" th:field="*{categoryId}">
+                <option value="" disabled th:selected="${product.categoryId == null}">
+                  Chon danh muc
+                </option>
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+              </select>
+              <p class="error" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></p>
+              <p class="helper" th:if="${#lists.isEmpty(categories)}">
+                Chon them danh muc truoc khi tao san pham.
+              </p>
+            </div>
+
+            <div class="field">
+              <label for="imageUrl">Hinh anh (URL)</label>
+              <input id="imageUrl" type="url" th:field="*{imageUrl}" placeholder="https://..." />
+              <p class="error" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></p>
+            </div>
+
+            <div class="actions">
+              <button class="button primary" type="submit" th:text="${submitLabel}"></button>
+              <a class="button ghost" th:href="@{/products}">Huy</a>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head th:fragment="head(title)">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="${title}">Demoj2ee</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+  </head>
+  <body>
+    <header class="site-header" th:fragment="nav(active)">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span class="brand-text">Demo J2EE</span>
+      </div>
+      <nav class="nav-links">
+        <a
+          th:href="@{/products}"
+          th:classappend="${active} == 'products' ? ' active' : ''"
+          >San pham</a
+        >
+        <a
+          th:href="@{/categories}"
+          th:classappend="${active} == 'categories' ? ' active' : ''"
+          >Danh muc</a
+        >
+      </nav>
+    </header>
+  </body>
+</html>

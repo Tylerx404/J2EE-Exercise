@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Danh muc')}"></head>
+  <body>
+    <div class="page">
+      <div th:replace="~{fragments :: nav('categories')}"></div>
+      <main class="content">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Phan nhom</p>
+            <h1>Danh muc</h1>
+            <p class="subtitle">Sap xep san pham theo nhom ro rang.</p>
+          </div>
+          <a class="button primary" th:href="@{/categories/new}">Them danh muc</a>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <h2>Danh sach hien co</h2>
+            <span class="pill" th:text="${categories.size()} + ' muc'"></span>
+          </div>
+          <div class="table-wrap" th:if="${!#lists.isEmpty(categories)}">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ten</th>
+                  <th>Thao tac</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="category : ${categories}">
+                  <td>
+                    <div class="title-cell" th:text="${category.name}"></div>
+                  </td>
+                  <td class="actions">
+                    <a class="button ghost" th:href="@{'/categories/' + ${category.id} + '/edit'}">Sua</a>
+                    <a class="button danger" th:href="@{'/categories/' + ${category.id} + '/delete'}">Xoa</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty" th:if="${#lists.isEmpty(categories)}">
+            <p>Chua co danh muc nao. Hay thu them moi.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

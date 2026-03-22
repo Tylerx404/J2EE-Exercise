@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('San pham')}"></head>
+  <body>
+    <div class="page">
+      <div th:replace="~{fragments :: nav('products')}"></div>
+      <main class="content">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Quan ly kho</p>
+            <h1>San pham</h1>
+            <p class="subtitle">Theo doi gia ban, danh muc va chinh sua nhanh.</p>
+          </div>
+          <a class="button primary" th:href="@{/products/new}">Them san pham</a>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <h2>Danh sach hien co</h2>
+            <span class="pill" th:text="${products.size()} + ' muc'"></span>
+          </div>
+          <div class="table-wrap" th:if="${!#lists.isEmpty(products)}">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hinh</th>
+                  <th>Ten</th>
+                  <th>Gia</th>
+                  <th>Danh muc</th>
+                  <th>Thao tac</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="product : ${products}">
+                  <td>
+                    <img
+                      class="thumb"
+                      th:src="${#strings.isEmpty(product.imageUrl) ? '/images/placeholder.svg' : product.imageUrl}"
+                      alt="product"
+                      loading="lazy"
+                    />
+                  </td>
+                  <td>
+                    <div class="title-cell" th:text="${product.name}"></div>
+                  </td>
+                  <td>
+                    <span
+                      class="price"
+                      th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' d'"
+                    ></span>
+                  </td>
+                  <td>
+                    <span
+                      th:text="${product.categoryId != null && categoryMap.containsKey(product.categoryId) ? categoryMap[product.categoryId] : 'Chua gan'}"
+                    ></span>
+                  </td>
+                  <td class="actions">
+                    <a
+                      class="button ghost"
+                      th:href="@{'/products/' + ${product.id} + '/edit'}"
+                      >Sua</a
+                    >
+                    <a
+                      class="button danger"
+                      th:href="@{'/products/' + ${product.id} + '/delete'}"
+                      >Xoa</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty" th:if="${#lists.isEmpty(products)}">
+            <p>Chua co san pham nao. Hay thu them moi.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

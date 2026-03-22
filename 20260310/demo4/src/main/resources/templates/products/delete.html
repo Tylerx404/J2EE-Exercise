@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Xoa san pham')}"></head>
+  <body>
+    <div class="page">
+      <div th:replace="~{fragments :: nav('products')}"></div>
+      <main class="content">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Xac nhan</p>
+            <h1>Xoa san pham</h1>
+            <p class="subtitle">Hanh dong nay khong the hoan tac.</p>
+          </div>
+          <a class="button ghost" th:href="@{/products}">Quay lai danh sach</a>
+        </section>
+
+        <section class="card">
+          <div class="confirm-grid">
+            <img
+              class="preview"
+              th:src="${#strings.isEmpty(product.imageUrl) ? '/images/placeholder.svg' : product.imageUrl}"
+              alt="product"
+            />
+            <div>
+              <h2 th:text="${product.name}"></h2>
+              <p class="meta">
+                <span
+                  th:text="${product.categoryId != null && categoryMap.containsKey(product.categoryId) ? categoryMap[product.categoryId] : 'Chua gan'}"
+                ></span>
+                <span class="dot"></span>
+                <span
+                  th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' d'"
+                ></span>
+              </p>
+              <form th:action="@{'/products/' + ${product.id} + '/delete'}" method="post">
+                <div class="actions">
+                  <button class="button danger" type="submit">Xoa ngay</button>
+                  <a class="button ghost" th:href="@{/products}">Huy</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
